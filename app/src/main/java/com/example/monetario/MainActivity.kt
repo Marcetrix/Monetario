@@ -24,12 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             converter()
-
         }
-
-
     }
-
 
     private fun converter() {
         val selectedcurrency = findViewById<RadioGroup>(R.id.radio_group)
@@ -52,27 +48,21 @@ class MainActivity : AppCompatActivity() {
 
         Thread {
             val url = URL("https://free.currconv.com/api/v7/convert?q=${currency}_BRL&compact=ultra&apiKey=fe4249bfe2d8e58e2d77")
-
             val conn = url.openConnection() as HttpsURLConnection
 
             try {
-
                 val data = conn.inputStream.bufferedReader().readText()
-
                 val obj = JSONObject(data)
 
                 runOnUiThread {
                     val res = obj.getDouble("${currency}_BRL")
-
-                result.text = "R$${"%.4f".format(value.toDouble() * res)}"
-                result.visibility = View.VISIBLE
+                    result.text = "R$${"%.4f".format(value.toDouble() * res)}"
+                    result.visibility = View.VISIBLE
                 }
 
             } finally {
                 conn.disconnect()
             }
         }.start()
-
-
     }
 }
